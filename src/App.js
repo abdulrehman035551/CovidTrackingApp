@@ -1,23 +1,47 @@
-import logo from './logo.svg';
-import './App.css';
-
+import getdata from "./Api/api";
+import {countries} from  "./Api/api";
+import { useEffect, useState } from "react";
+import ActionAreaCard from "./components/cards/cards"
+import Graph from './components/Chart/Chart'
+import BasicSelect from './components/countarypicker/countarypicker'
+import Header from './components/Header/Header'
 function App() {
+ let [fetchdata,setFetchdata]=useState({
+  confirmed: { value: "" },
+  deaths: { value: "" },
+  lastUpdate: "",
+ 
+ })
+
+  async function data()
+
+  {
+    let resp=await getdata()
+    setFetchdata(resp.data)
+    
+  
+   
+  }
+  async function  Fetchdata(data)
+  {
+   
+   
+   let resp=await countries(data)
+   setFetchdata(resp.data)
+   
+  }
+
+ 
+  useEffect(() => {
+  data()
+  Fetchdata()
+  }, [])
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+<Header/>
+< ActionAreaCard   fetchdata={fetchdata}></ActionAreaCard>
+<BasicSelect Fetchdata={Fetchdata} ></BasicSelect>
+<Graph  fetchdata={fetchdata}></Graph>
     </div>
   );
 }

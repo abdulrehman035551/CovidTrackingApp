@@ -1,0 +1,12 @@
+#main
+{
+    /* border: solid; */
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+@media only screen and (max-width: 600px) {
+    #barchart {
+      width: 300px;
+    }
+  }
